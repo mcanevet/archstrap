@@ -6,8 +6,8 @@ class arch::config::gnome {
     ensure => 'present',
   }
   ~>
-  exec { 'systemctl enable gdm':
-    path        => $::path,
-    refreshonly => true,
+  service { 'gdm':
+    ensure => 'running',
+    enable => true,
   }
 }
