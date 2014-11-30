@@ -36,7 +36,7 @@
       "inline": [
         "mkfs.btrfs /dev/sda",
         "mount /dev/sda /mnt",
-        "sed -i '/^##$/ a\##Score 0.3, France\nServer = http://archlinux.polymorf.fr/$repo/os/$arch' /etc/pacman.d/mirrorlist",
+        "sed -i '/^##$/ a\\##Score 0.3, France\\\nServer = http://archlinux.polymorf.fr/$repo/os/$arch' /etc/pacman.d/mirrorlist",
         "pacstrap /mnt base",
         "genfstab -U -p /mnt >> /mnt/etc/fstab"
       ],
