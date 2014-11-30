@@ -8,7 +8,9 @@ class arch(
   class { 'arch::config::timezone': }
   class { 'arch::config::locales': }
   class { 'arch::config::keymap': }
-  class { 'arch::config::network': }
+  class { 'arch::config::network':
+    provider => 'networkmanager',
+  }
   class { 'arch::config::bootloader': }
   class { 'arch::config::user': }
   class { 'arch::config::xorg': }

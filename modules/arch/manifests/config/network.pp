@@ -1,8 +1,22 @@
 class arch::config::network(
-  $provider = 'networkmanager',
+  $provider,
 ) {
   case $provider {
+    'connman': {
+      package { 'connman':
+        ensure => present,
+      }
+      ->
+      service { 'connman':
+        ensure => running,
+        enable => true,
+      }
+    }
     'dhcpcd': {
+      service { 'connman':
+        ensure => stopped,
+        enable => false,
+      }
       service { 'dhcpcd':
         ensure => running,
         enable => true,
@@ -17,6 +31,10 @@ class arch::config::network(
       }
     }
     'networkmanager': {
+      service { 'connman':
+        ensure => stopped,
+        enable => false,
+      }
       service { 'dhcpcd':
         ensure => stopped,
         enable => false,
@@ -38,6 +56,10 @@ class arch::config::network(
       }
     }
     'systemd-networkd': {
+      service { 'connman':
+        ensure => stopped,
+        enable => false,
+      }
       service { 'dhcpcd':
         ensure => stopped,
         enable => false,
