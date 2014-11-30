@@ -2,16 +2,22 @@ class arch::config::aur {
   package { 'base-devel':
     ensure => present,
   }
-  file { '/etc/pacman.d/archlinuxfr':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "[archlinuxfr]
-SigLevel = Never
-Server = http://repo.archlinux.fr/\$arch",
+
+  Ini_setting {
+    ensure  => present,
+    path    => '/etc/pacman.conf',
+    section => 'archlinuxfr',
+    before  => Package['yaourt']
   }
-  ->
+  ini_setting { 'SigLevel':
+    setting => 'SigLevel',
+    value   => 'Never',
+  }
+  ini_setting { 'Server':
+    setting => 'Server',
+    value   => "http://repo.archlinux.fr/\$arch",
+  }
+
   package { 'yaourt':
     ensure => present,
   }
