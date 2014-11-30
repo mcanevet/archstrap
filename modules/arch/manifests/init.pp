@@ -1,7 +1,7 @@
 class arch(
   $user = 'admin',
 ) {
-  package { ['augeas', 'btrfs-progs', 'vim',]:
+  package { ['augeas', 'vim',]:
     ensure => present,
   }
 
