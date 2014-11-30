@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 /bin/arch-chroot /mnt <<SCRIPT
 
-echo 'Set up the initial RAMdisk'
-mkinitcpio -p linux
-
 echo 'Ensure dhcpcd starts on boot'
 systemctl enable dhcpcd.service
 
