@@ -1,0 +1,63 @@
+{
+  "builders": [
+    {
+      "boot_command": [
+        "<enter><wait10><wait10><wait10>",
+        "sed -i -e 's/^#PermitRootLogin /PermitRootLogin /' -e 's/^#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config<enter><wait>",
+        "systemctl restart sshd.service<enter>"
+      ],
+      "boot_wait": "5s",
+      "guest_os_type": "ArchLinux_64",
+      "headless": true,
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "ssh_password": "",
+      "ssh_username": "root",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "1024"
+        ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "inline": [
+        "mkfs.btrfs /dev/sda",
+        "mount /dev/sda /mnt",
+        "sed -i '/^##$/ a\##Score 0.3, France\nServer = http://archlinux.polymorf.fr/$repo/os/$arch' /etc/pacman.d/mirrorlist",
+        "pacstrap /mnt base",
+        "genfstab -U -p /mnt >> /mnt/etc/fstab"
+      ],
+      "type": "shell"
+    },
+    {
+      "scripts": [
+        "base.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "destination": "/mnt/home/vagrant/.ssh/authorized_keys",
+      "source": "vagrant.pub",
+      "type": "file"
+    }
+  ],
+  "variables": {
+    "iso_checksum": "a140bb9d182d2c5260132fe4ab68a5d438b16671",
+    "iso_checksum_type": "sha1",
+    "iso_url": "http://archlinux.mirrors.ovh.net/archlinux/iso/2014.11.01/archlinux-2014.11.01-dual.iso"
+  }
+}
+
