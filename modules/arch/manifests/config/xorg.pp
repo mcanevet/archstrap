@@ -8,11 +8,6 @@ class arch::config::xorg {
     path    => $::path,
   }
 
-  # Simple TWM env
-  package { ['xorg-twm', 'xorg-xclock', 'xterm',]:
-    ensure => 'present',
-  }
-
   # Nice fonts
   package { [
     'xorg-fonts-type1', 'ttf-dejavu', 'artwiz-fonts', 'font-bh-ttf',
