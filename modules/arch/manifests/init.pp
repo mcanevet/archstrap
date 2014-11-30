@@ -14,4 +14,5 @@ class arch(
   class { 'arch::config::virtualbox': }
   class { 'arch::config::xorg': }
   class { 'arch::config::gnome': }
+  class { 'arch::config::aur': }
 }
