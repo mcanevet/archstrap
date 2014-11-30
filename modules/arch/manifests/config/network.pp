@@ -2,8 +2,8 @@ class arch::config::network(
   $provider = 'networkmanager',
 ) {
   case $provider {
-    'dhcpd': {
-      service { 'dhcpd':
+    'dhcpcd': {
+      service { 'dhcpcd':
         ensure => running,
         enable => true,
       }
@@ -17,7 +17,7 @@ class arch::config::network(
       }
     }
     'networkmanager': {
-      service { 'dhcpd':
+      service { 'dhcpcd':
         ensure => stopped,
         enable => false,
       }
@@ -38,7 +38,7 @@ class arch::config::network(
       }
     }
     'systemd-networkd': {
-      service { 'dhcpd':
+      service { 'dhcpcd':
         ensure => stopped,
         enable => false,
       }
